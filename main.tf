@@ -1,60 +1,17 @@
-
-
-### Instance EC2 (VM)
-####     ----> SSH-PUBLIC-KEY --> DONE
-####     ----> SG (Sécurity Group) [22/TCP]  --> DONE
-
-
-resource "aws_key_pair" "myssh-key" {
-
-  key_name   = var.ssh_key_name
-  public_key = var.ssh_public_key
-  
-}
-
-
-resource "aws_security_group" "my-sg" {
-
-  description = "Security group to allow incoming SSH connection to ec2 instance"
-  name        = "my_sg"
-
-  ingress = [{
-    cidr_blocks      = ["0.0.0.0/0"]
-    description      = "Allow SSH"
-    from_port        = 22
-    ipv6_cidr_blocks = []
-    prefix_list_ids  = []
-    protocol         = "TCP"
-    security_groups  = []
-    self             = false
-    to_port          = 22
-  }]
-
-  egress = [{
-    description      = "Allow connection to any internet service"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    self             = false
-    ipv6_cidr_blocks = []
-    prefix_list_ids = []
-    security_groups = []
-
-  }]
-
-}
-
-
-resource "aws_instance" "myec2" {
-
-  ami             = "ami-0574da719dca65348"
-  instance_type   = "t2.medium"
-  key_name        = aws_key_pair.myssh-key.key_name # 1ère variable terraform
-  security_groups = [aws_security_group.my-sg.name]
-  tags = {
-    "Name" = "myvm"
-  }
-
-
+module "ec2-ready" {
+  source = "./modules/ec2-ready"
+  ssh_key_name = var.ssh_key_name
+  public_ssh_key = var.public_ssh_key
+  sg_ingress_cidr_blocks = var.sg_ingress_cidr_blocks
+  sg_ingress_from_port = var.sg_ingress_from_port
+  sg_ingress_protocol = var.sg_ingress_protocol
+  sg_ingress_to_port = var.sg_ingress_to_port
+  sg_egress_protocol = var.sg_egress_protocol
+  sg_egress_cidr_blocks = var.sg_egress_cidr_blocks
+  ec2_ami = var.ec2_ami
+  ec2_instance_type = var.ec2_instance_type
+  ec2_name = var.ec2_name
+  sg_name = var.sg_name
+  sg_egress_from_port = var.sg_egress_from_port
+  sg_egress_to_port = var.sg_egress_to_port
 }

@@ -27,16 +27,30 @@ variable "aws_region" {
   
 }
 
-variable "ssh_key_name" {
+variable "ssh_key_name" {}
 
-    description = "name of public key"
-    type = string
-  
-}
+variable "public_ssh_key" {}
 
-variable "ssh_public_key" {
+variable "sg_ingress_protocol" {}
 
-    description = "ssh public key"
-    type = string
-}
+variable "sg_ingress_from_port" {}
 
+variable "sg_ingress_to_port" {}
+
+variable "sg_ingress_cidr_blocks" {}
+
+variable "sg_egress_protocol" {}
+
+variable "sg_egress_cidr_blocks" {}
+
+variable "ec2_ami" {}
+
+variable "ec2_instance_type" {}
+
+variable "ec2_name" {}
+
+variable "sg_name" {}
+
+variable "sg_egress_from_port" {}
+
+variable "sg_egress_to_port" {}
