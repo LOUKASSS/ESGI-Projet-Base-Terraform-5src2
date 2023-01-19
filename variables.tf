@@ -29,7 +29,7 @@ variable "aws_region" {
 
 variable "ssh_key_name" {}
 
-variable "public_ssh_key" {}
+variable "ssh_public_key" {}
 
 variable "sg_ingress_protocol" {}
 
@@ -54,3 +54,5 @@ variable "sg_name" {}
 variable "sg_egress_from_port" {}
 
 variable "sg_egress_to_port" {}
+
+variable "bucket_s3_name" {}

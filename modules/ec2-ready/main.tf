@@ -50,7 +50,7 @@ resource "aws_instance" "myec2" {
 
   ami             = var.ec2_ami
   instance_type   = var.ec2_instance_type
-  key_name        = aws_key_pair.myssh-key.key_name # 1ère variable terraform
+  key_name        = aws_key_pair.myssh-key.key_name
   security_groups = [aws_security_group.my-sg.name]
   tags = {
     "Name" = var.ec2_name
